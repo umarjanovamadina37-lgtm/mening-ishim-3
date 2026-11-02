@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Nuqta — gadjetlar do'koni</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #F4F6FA;
+  --card: #FFFFFF;
+  --ink: #0F1B2D;
+  --muted: #5B6679;
+  --line: #DDE2EB;
+  --signal: #2F5BFF;
+  --signal-dark: #1E43D6;
+  --sun: #FFB020;
+  --danger: #D92D4B;
+  --ok: #12805C;
+  --font: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
+.wrap { width: min(1180px, 100% - 32px); margin-inline: auto; }
+
+/* ---------- Header ---------- */
+.top {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.top-row { display: flex; align-items: center; gap: 20px; padding: 12px 0; }
+.logo { font-weight: 800; font-size: 1.7rem; letter-spacing: -.04em; color: var(--ink); text-decoration: none; }
+.logo span { color: var(--signal); }
+
+.search {
+  flex: 1; display: flex; max-width: 560px;
+  background: var(--paper); border: 1.5px solid var(--line);
+  border-radius: 12px; overflow: hidden;
+}
+.search:focus-within { border-color: var(--signal); background: #fff; }
+.search input {
+  flex: 1; border: 0; background: transparent; padding: 11px 14px; min-width: 0;
+}
+.search input:focus-visible { outline: none; }
+.search button {
+  border: 0; background: transparent; padding: 0 14px; color: var(--muted);
+}
+.actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.btn-ghost {
+  border: 1.5px solid var(--line); background: #fff; border-radius: 10px;
+  padding: 9px 14px; font-weight: 700; max-width: 160px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.btn-ghost:hover { border-color: var(--ink); }
+.cart-btn {
+  position: relative; display: flex; align-items: center; gap: 8px;
+  border: 0; background: var(--ink); color: #fff;
+  border-radius: 10px; padding: 9px 14px; font-weight: 700;
+}
+.cart-btn b {
+  min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px;
+  background: var(--sun); color: var(--ink); font-size: .8rem;
+  display: grid; place-items: center;
+}
+.cart-btn.bump b { animation: bump .35s ease; }
+@keyframes bump { 50% { transform: scale(1.35); } }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block; border: 0; text-decoration: none; text-align: center;
+  background: var(--signal); color: #fff; font-weight: 700;
+  padding: 12px 22px; border-radius: 10px;
+  transition: background .15s;
+}
+.btn:hover { background: var(--signal-dark); }
+.btn.block { display: block; width: 100%; }
+.btn.dark { background: var(--ink); }
+.btn.dark:hover { background: #1d2d47; }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+/* ---------- Hero ---------- */
+.hero { background: var(--ink); color: #fff; padding: 56px 0; }
+.hero-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.6rem); line-height: 1.05; letter-spacing: -.03em; margin: 0 0 16px; }
+.hero p { color: #B7C2D6; max-width: 46ch; margin: 0 0 24px; }
+.perks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.perks li {
+  display: flex; align-items: baseline; gap: 16px;
+  padding: 14px 18px; border-radius: 12px; background: rgba(255,255,255,.07);
+}
+.perks b { font-size: 1.5rem; color: var(--sun); min-width: 84px; }
+.perks span { color: #D5DCEA; }
+
+/* ---------- Catalog ---------- */
+main { padding: 36px 0 12px; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: 1.5px solid var(--line); background: #fff; border-radius: 999px;
+  padding: 8px 16px; font-weight: 600; font-size: .92rem;
+}
+.chip:hover { border-color: var(--ink); }
+.chip.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.sort { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .9rem; }
+.sort select { border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 10px; background: #fff; color: var(--ink); }
+.result-info { color: var(--muted); margin: 8px 0 18px; min-height: 1.5em; font-size: .92rem; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 18px; }
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  overflow: hidden; display: flex; flex-direction: column; cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+}
+.card:hover { border-color: var(--signal); box-shadow: 0 8px 24px rgba(15,27,45,.08); }
+.card-img { position: relative; aspect-ratio: 1; background: #EEF1F7; }
+.card-img img { width: 100%; height: 100%; object-fit: cover; }
+.badge {
+  position: absolute; top: 12px; left: 12px; background: var(--sun); color: var(--ink);
+  font-weight: 800; font-size: .8rem; padding: 4px 9px; border-radius: 6px;
+}
+.card-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.card h3 { font-size: 1.02rem; margin: 0; line-height: 1.3; }
+.price-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-top: auto; padding-top: 6px; }
+.price { font-weight: 800; font-size: 1.15rem; }
+.old { color: var(--muted); text-decoration: line-through; font-size: .88rem; }
+.card .btn { margin-top: 8px; padding: 10px; }
+
+.empty { text-align: center; padding: 60px 16px; }
+.empty h3 { margin: 0 0 6px; font-size: 1.3rem; }
+.empty p { color: var(--muted); margin: 0 0 18px; }
+
+/* ---------- Delivery ---------- */
+.delivery { padding: 56px 0; }
+.delivery h2 { font-size: 1.8rem; letter-spacing: -.02em; margin: 0 0 20px; }
+.d-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+.d-grid article { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+.d-grid h3 { margin: 0 0 4px; font-size: 1.05rem; }
+.d-grid p { margin: 0; color: var(--muted); }
+.d-grid .d-price { color: var(--signal); font-weight: 800; font-size: 1.4rem; margin-bottom: 8px; }
+
+.foot { border-top: 1px solid var(--line); padding: 22px 0; color: var(--muted); font-size: .9rem; background: #fff; }
+.foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+
+/* ---------- Dialogs ---------- */
+.dlg {
+  border: 0; border-radius: 20px; padding: 28px; width: min(440px, calc(100% - 24px));
+  background: #fff; color: var(--ink); position: fixed;
+  max-height: calc(100dvh - 24px); overflow: auto;
+}
+.dlg::backdrop { background: rgba(15,27,45,.55); }
+.dlg-wide { width: min(900px, calc(100% - 24px)); }
+.x {
+  position: absolute; top: 12px; right: 14px; width: 36px; height: 36px;
+  border: 0; border-radius: 50%; background: var(--paper); font-size: 1.4rem; line-height: 1;
+  z-index: 2;
+}
+.x:hover { background: var(--line); }
+.x.static { position: static; }
+
+.dlg-side {
+  margin: 0 0 0 auto; inset: 0 0 0 auto; height: 100dvh; max-height: none;
+  width: min(430px, 100%); border-radius: 20px 0 0 20px; padding: 0;
+  overflow: hidden;
+}
+.dlg-side[open] { display: flex; flex-direction: column; }
+.side-head { display: flex; align-items: center; justify-content: space-between; padding: 20px 22px; border-bottom: 1px solid var(--line); }
+.side-head h2 { margin: 0; font-size: 1.3rem; }
+.side-body { flex: 1; overflow: auto; padding: 8px 22px; }
+.side-foot { border-top: 1px solid var(--line); padding: 18px 22px; background: var(--paper); }
+
+/* Product dialog */
+.p-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 28px; }
+.gallery .main { aspect-ratio: 1; border-radius: 14px; overflow: hidden; background: #EEF1F7; }
+.gallery .main img { width: 100%; height: 100%; object-fit: cover; }
+.thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
+.thumbs button {
+  padding: 0; border: 2px solid transparent; border-radius: 10px; overflow: hidden;
+  background: #EEF1F7; aspect-ratio: 1;
+}
+.thumbs button.on { border-color: var(--signal); }
+.thumbs img { width: 100%; height: 100%; object-fit: cover; }
+.p-info h2 { margin: 6px 40px 8px 0; font-size: 1.5rem; line-height: 1.2; letter-spacing: -.02em; }
+.p-info .desc { color: var(--muted); margin: 10px 0 16px; }
+.p-price { display: flex; align-items: baseline; gap: 10px; }
+.p-price .price { font-size: 1.7rem; }
+.stock { color: var(--ok); font-weight: 700; font-size: .9rem; }
+.specs { width: 100%; border-collapse: collapse; margin: 0 0 20px; font-size: .92rem; }
+.specs td { padding: 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.specs td:first-child { color: var(--muted); width: 38%; }
+
+/* Cart items */
+.line { display: grid; grid-template-columns: 72px 1fr auto; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.line img { width: 72px; height: 72px; border-radius: 10px; object-fit: cover; background: #EEF1F7; }
+.line h4 { margin: 0 0 4px; font-size: .95rem; line-height: 1.3; }
+.line .price { font-size: 1rem; }
+.qty { display: inline-flex; align-items: center; border: 1.5px solid var(--line); border-radius: 8px; margin-top: 8px; }
+.qty button { width: 30px; height: 30px; border: 0; background: transparent; font-size: 1.1rem; }
+.qty button:hover { background: var(--paper); }
+.qty span { min-width: 28px; text-align: center; font-weight: 700; }
+.rm { border: 0; background: none; color: var(--muted); font-size: .85rem; text-decoration: underline; padding: 0; }
+.rm:hover { color: var(--danger); }
+.sum-row { display: flex; justify-content: space-between; margin: 0 0 6px; color: var(--muted); }
+.sum-row.total { color: var(--ink); font-weight: 800; font-size: 1.2rem; margin: 10px 0 14px; }
+.free-bar { font-size: .85rem; color: var(--muted); margin-bottom: 12px; }
+.free-bar i { display: block; height: 6px; border-radius: 3px; background: var(--line); margin-top: 6px; overflow: hidden; }
+.free-bar i::after { content: ""; display: block; height: 100%; width: var(--p, 0%); background: var(--signal); transition: width .3s; }
+.cart-empty { text-align: center; padding: 60px 10px; color: var(--muted); }
+.cart-empty strong { display: block; color: var(--ink); font-size: 1.1rem; margin-bottom: 4px; }
+
+/* Forms */
+.tabs { display: flex; gap: 4px; background: var(--paper); border-radius: 12px; padding: 4px; margin: 4px 36px 18px 0; }
+.tab { flex: 1; border: 0; background: transparent; padding: 9px 8px; border-radius: 9px; font-weight: 700; color: var(--muted); }
+.tab.on { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+.form { display: grid; gap: 14px; }
+.form[hidden] { display: none; }
+.form label { display: grid; gap: 6px; font-weight: 600; font-size: .9rem; }
+.form input, .form select, .form textarea {
+  border: 1.5px solid var(--line); border-radius: 10px; padding: 11px 12px; background: #fff; width: 100%;
+}
+.form input:focus, .form select:focus, .form textarea:focus { border-color: var(--signal); outline: none; }
+.err { color: var(--danger); font-size: .88rem; margin: 0; min-height: 1.2em; }
+.note { background: #FFF6E0; border-radius: 10px; padding: 10px 12px; font-size: .9rem; margin: 0 0 14px; }
+
+/* Checkout */
+.co-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; }
+.co-grid h2 { margin: 0 36px 16px 0; font-size: 1.4rem; }
+.co-grid h3 { font-size: 1rem; margin: 18px 0 8px; }
+.opt {
+  display: flex !important; align-items: flex-start; gap: 10px;
+  border: 1.5px solid var(--line); border-radius: 12px; padding: 12px; cursor: pointer;
+  font-weight: 600 !important;
+}
+.opt input { width: auto; margin-top: 4px; }
+.opt small { display: block; color: var(--muted); font-weight: 400; }
+.opt b { margin-left: auto; white-space: nowrap; }
+.opt:has(input:checked) { border-color: var(--signal); background: #F1F4FF; }
+.opts { display: grid; gap: 8px; }
+.summary { background: var(--paper); border-radius: 14px; padding: 18px; align-self: start; }
+.summary .mini { display: flex; justify-content: space-between; gap: 10px; font-size: .9rem; margin-bottom: 8px; }
+.done { text-align: center; padding: 20px 8px; }
+.done .tick { width: 64px; height: 64px; border-radius: 50%; background: var(--ok); color: #fff; font-size: 2rem; display: grid; place-items: center; margin: 0 auto 14px; }
+.done h2 { margin: 0 0 6px; }
+.done p { color: var(--muted); margin: 0 0 6px; }
+.order { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; font-size: .92rem; }
+.order b { display: block; }
+.order small { color: var(--muted); }
+
+/* Toast */
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 30px);
+  background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 12px;
+  opacity: 0; pointer-events: none; transition: .25s; z-index: 100; max-width: calc(100% - 32px);
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 760px) {
+  .top-row { flex-wrap: wrap; gap: 10px; }
+  .search { order: 3; flex-basis: 100%; max-width: none; }
+  .cart-btn span { display: none; }
+  .hero { padding: 36px 0; }
+  .hero-grid, .p-grid, .co-grid { grid-template-columns: 1fr; }
+  .dlg { padding: 20px; }
+  .dlg-side { padding: 0; }
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .card-body { padding: 10px 12px 12px; }
+  .card h3 { font-size: .9rem; }
+  .price { font-size: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* Telefonda tizim panellaridan pastroq turishi uchun */
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+.top { top: env(safe-area-inset-top, 0px); }
+</style>
+</head>
+<body>
+
+  <header class="top">
+    <div class="wrap top-row">
+      <a href="#" class="logo" aria-label="Nuqta bosh sahifa">nuqta<span>.</span></a>
+
+      <form class="search" role="search" id="searchForm">
+        <input type="search" id="searchInput" placeholder="Telefon, quloqchin, soat qidiring…" autocomplete="off" aria-label="Qidirish">
+        <button type="submit" aria-label="Qidirish">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </button>
+      </form>
+
+      <div class="actions">
+        <button class="btn-ghost" id="accountBtn">Kirish</button>
+        <button class="cart-btn" id="cartBtn" aria-label="Savat">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 8H6"/><circle cx="9.5" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>
+          <span>Savat</span>
+          <b id="cartCount">0</b>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Yangi gadjetlar,<br>eshigingizgacha.</h1>
+        <p>Toshkent bo'ylab 1 kunda, viloyatlarga 3–5 kunda yetkazamiz. 3 000 000 so'mdan yuqori buyurtmada kuryer bepul.</p>
+        <a class="btn" href="#catalog">Katalogni ko'rish</a>
+      </div>
+      <ul class="perks">
+        <li><b>1 kun</b><span>Toshkent bo'ylab kuryer</span></li>
+        <li><b>12 oy</b><span>Rasmiy kafolat</span></li>
+        <li><b>14 kun</b><span>Qaytarish huquqi</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <main class="wrap" id="catalog">
+    <div class="toolbar">
+      <div class="chips" id="chips" role="tablist" aria-label="Kategoriyalar"></div>
+      <label class="sort">
+        <span>Saralash</span>
+        <select id="sortSelect">
+          <option value="default">Odatiy</option>
+          <option value="cheap">Arzonroq</option>
+          <option value="expensive">Qimmatroq</option>
+          <option value="name">Nomi bo'yicha</option>
+        </select>
+      </label>
+    </div>
+
+    <p class="result-info" id="resultInfo" aria-live="polite"></p>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>
+      <h3>Hech narsa topilmadi</h3>
+      <p>Boshqa so'z bilan qidirib ko'ring yoki kategoriyani o'zgartiring.</p>
+      <button class="btn" id="resetBtn">Filtrlarni tozalash</button>
+    </div>
+  </main>
+
+  <section class="delivery wrap" id="delivery">
+    <h2>Yetkazib berish</h2>
+    <div class="d-grid">
+      <article>
+        <h3>Toshkent — kuryer</h3>
+        <p class="d-price">25 000 so'm</p>
+        <p>Buyurtma kuni yoki ertasi kuni, 10:00–21:00 oralig'ida. 3 000 000 so'mdan yuqori bo'lsa bepul.</p>
+      </article>
+      <article>
+        <h3>Viloyatlarga — pochta</h3>
+        <p class="d-price">45 000 so'm</p>
+        <p>3–5 ish kunida. Mahsulot ochilgan holda tekshirib olinadi, keyin to'lov qilinadi.</p>
+      </article>
+      <article>
+        <h3>Do'kondan olib ketish</h3>
+        <p class="d-price">Bepul</p>
+        <p>Buyurtma tasdiqlangandan keyin 2 soat ichida tayyor bo'ladi. Manzil: Toshkent, Chilonzor.</p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Nuqta. Barcha huquqlar himoyalangan.</span>
+      <span>Aloqa: +998 90 123 45 67</span>
+    </div>
+  </footer>
+
+  <!-- Mahsulot oynasi -->
+  <dialog id="productDlg" class="dlg dlg-wide">
+    <button class="x" data-close aria-label="Yopish">×</button>
+    <div id="productBody"></div>
+  </dialog>
+
+  <!-- Savat -->
+  <dialog id="cartDlg" class="dlg dlg-side">
+    <div class="side-head">
+      <h2>Savat</h2>
+      <button class="x static" data-close aria-label="Yopish">×</button>
+    </div>
+    <div id="cartBody" class="side-body"></div>
+    <div class="side-foot" id="cartFoot"></div>
+  </dialog>
+
+  <!-- Kirish / ro'yxatdan o'tish -->
+  <dialog id="authDlg" class="dlg">
+    <button class="x" data-close aria-label="Yopish">×</button>
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-tab="login" role="tab">Kirish</button>
+      <button class="tab" data-tab="register" role="tab">Ro'yxatdan o'tish</button>
+    </div>
+    <p class="note" id="authNote" hidden></p>
+
+    <form id="loginForm" class="form" novalidate>
+      <label>Telefon raqam
+        <input name="phone" type="tel" placeholder="+998 90 123 45 67" autocomplete="tel" required>
+      </label>
+      <label>Parol
+        <input name="password" type="password" autocomplete="current-password" required>
+      </label>
+      <p class="err" role="alert"></p>
+      <button class="btn block" type="submit">Kirish</button>
+    </form>
+
+    <form id="registerForm" class="form" hidden novalidate>
+      <label>Ism va familiya
+        <input name="name" type="text" autocomplete="name" required>
+      </label>
+      <label>Telefon raqam
+        <input name="phone" type="tel" placeholder="+998 90 123 45 67" autocomplete="tel" required>
+      </label>
+      <label>Parol (kamida 6 belgi)
+        <input name="password" type="password" autocomplete="new-password" required>
+      </label>
+      <label>Parolni takrorlang
+        <input name="password2" type="password" autocomplete="new-password" required>
+      </label>
+      <p class="err" role="alert"></p>
+      <button class="btn block" type="submit">Ro'yxatdan o'tish</button>
+    </form>
+  </dialog>
+
+  <!-- Hisob -->
+  <dialog id="accountDlg" class="dlg">
+    <button class="x" data-close aria-label="Yopish">×</button>
+    <div id="accountBody"></div>
+  </dialog>
+
+  <!-- Buyurtma -->
+  <dialog id="checkoutDlg" class="dlg dlg-wide">
+    <button class="x" data-close aria-label="Yopish">×</button>
+    <div id="checkoutBody"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/*
+  MAHSULOTLAR RO'YXATI
+  --------------------
+  Yangi mahsulot qo'shish uchun pastdagi ro'yxatga yangi obyekt qo'shing.
+
+  Rasmlar: hozircha har bir mahsulot uchun 4 ta rasm avtomatik chiziladi
+  (old, yon, detal, quti). O'z rasmlaringizni qo'ymoqchi bo'lsangiz,
+  obyektga shunday qo'shing:
+
+     images: ["img/iphone-1.jpg", "img/iphone-2.jpg", "img/iphone-3.jpg", "img/iphone-4.jpg"]
+
+  Shunda avtomatik rasmlar o'rniga sizning rasmlaringiz chiqadi.
+*/
+
+const CATEGORIES = [
+  { id: "phone",   name: "Telefonlar" },
+  { id: "audio",   name: "Audio" },
+  { id: "watch",   name: "Soatlar" },
+  { id: "laptop",  name: "Noutbuklar" },
+  { id: "acc",     name: "Aksessuarlar" }
+];
+
+const PRODUCTS = [
+  {
+    id: 1, cat: "phone", art: "phone", color: "#2F5BFF",
+    name: "Nova X1 smartfon 256 GB",
+    price: 7490000, old: 8290000, stock: 12,
+    desc: "6.7 dyuymli AMOLED ekran, 120 Hz. Uch kamerali tizim va kun bo'yi yetadigan batareya.",
+    specs: [["Ekran", "6.7\" AMOLED, 120 Hz"], ["Xotira", "8 GB / 256 GB"], ["Batareya", "5000 mAh, 67 W"], ["Kamera", "50 + 12 + 8 MP"]]
+  },
+  {
+    id: 2, cat: "phone", art: "phone", color: "#14B8A6",
+    name: "Nova Lite smartfon 128 GB",
+    price: 3290000, old: 0, stock: 25,
+    desc: "Kundalik ishlar uchun ixcham va yengil telefon. Yorqin ekran va ishonchli batareya.",
+    specs: [["Ekran", "6.4\" IPS, 90 Hz"], ["Xotira", "6 GB / 128 GB"], ["Batareya", "4800 mAh, 33 W"], ["Kamera", "48 + 2 MP"]]
+  },
+  {
+    id: 3, cat: "audio", art: "headphones", color: "#7C3AED",
+    name: "Sono Pro simsiz quloqchin",
+    price: 1890000, old: 2290000, stock: 18,
+    desc: "Faol shovqin bostirish, 40 soat ish vaqti va qulay yumshoq quloq yostiqchalari.",
+    specs: [["Turi", "Yopiq, Bluetooth 5.3"], ["Ish vaqti", "40 soat"], ["Shovqin bostirish", "ANC"], ["Zaryad", "USB-C, 10 daqiqada 5 soat"]]
+  },
+  {
+    id: 4, cat: "audio", art: "buds", color: "#0EA5E9",
+    name: "Sono Buds TWS quloqchin",
+    price: 690000, old: 850000, stock: 40,
+    desc: "Kichkina, yengil va suvdan himoyalangan. Zaryad qutisi bilan birga 24 soat ishlaydi.",
+    specs: [["Turi", "TWS, Bluetooth 5.2"], ["Ish vaqti", "6 soat + 18 soat quti"], ["Himoya", "IPX5"], ["Mikrofon", "Ikkita, shovqinni kamaytiradi"]]
+  },
+  {
+    id: 5, cat: "watch", art: "watch", color: "#F97316",
+    name: "Vira Watch 3 smart-soat",
+    price: 1450000, old: 0, stock: 15,
+    desc: "Yurak urishi, uyqu va mashqlarni kuzatadi. Telefon xabarlari qo'lingizda.",
+    specs: [["Ekran", "1.5\" AMOLED"], ["Batareya", "14 kungacha"], ["Himoya", "5 ATM, suv o'tkazmaydi"], ["Sensorlar", "Puls, SpO2, GPS"]]
+  },
+  {
+    id: 6, cat: "laptop", art: "laptop", color: "#1E293B",
+    name: "Arka Book 14 noutbuk",
+    price: 9800000, old: 10900000, stock: 7,
+    desc: "Yengil alyuminiy korpus, tez SSD va ish kuni davomida zaryadsiz ishlaydigan batareya.",
+    specs: [["Ekran", "14\" IPS, 2.2K"], ["Protsessor", "8 yadroli"], ["Xotira", "16 GB / 512 GB SSD"], ["Og'irligi", "1.3 kg"]]
+  },
+  {
+    id: 7, cat: "audio", art: "speaker", color: "#E11D48",
+    name: "Bumbox mini portativ kolonka",
+    price: 540000, old: 0, stock: 30,
+    desc: "Cho'ntakka sig'adigan, lekin baland va boy tovush beradi. Suvdan va changdan himoyalangan.",
+    specs: [["Quvvat", "20 W"], ["Ish vaqti", "12 soat"], ["Himoya", "IP67"], ["Ulanish", "Bluetooth 5.3, AUX"]]
+  },
+  {
+    id: 8, cat: "acc", art: "powerbank", color: "#84CC16",
+    name: "Volt 20000 mAh power bank",
+    price: 420000, old: 520000, stock: 50,
+    desc: "Telefonni 4 martagacha to'liq zaryadlaydi. Tez zaryad va ikkita chiqish porti bor.",
+    specs: [["Sig'im", "20 000 mAh"], ["Quvvat", "45 W PD"], ["Portlar", "USB-C, 2 × USB-A"], ["Displey", "Zaryad foizi ko'rsatkichi"]]
+  }
+];
+</script>
+<script>
+/*
+  NUQTA — gadjetlar do'koni
+  Funksiyalar: katalog, qidiruv, mahsulot rasmlari galereyasi, savat,
+  ro'yxatdan o'tish / kirish, yetkazib berish bilan buyurtma berish.
+
+  DIQQAT: ma'lumotlar (foydalanuvchilar, savat, buyurtmalar) brauzerning
+  localStorage'ida saqlanadi. Bu o'quv/namuna varianti. Haqiqiy do'kon uchun
+  foydalanuvchi, parol va buyurtmalarni server va ma'lumotlar bazasida
+  saqlash kerak.
+*/
+(() => {
+  'use strict';
+
+  /* ---------- Yordamchi funksiyalar ---------- */
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const fmt = n => Math.round(n).toLocaleString('ru-RU').replace(/\u00a0/g, ' ') + " so'm";
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  const store = {
+    get(key, fallback) {
+      try { const v = JSON.parse(localStorage.getItem(key)); return v ?? fallback; }
+      catch { return fallback; }
+    },
+    set(key, value) {
+      try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* xotira to'la yoki taqiqlangan */ }
+    }
+  };
+
+  /* ---------- Sozlamalar ---------- */
+  const DELIVERY = {
+    courier: { name: 'Kuryer (Toshkent shahri)', fee: 25000, time: '1 kun ichida' },
+    post:    { name: 'Pochta (butun O\'zbekiston)', fee: 45000, time: '3–5 ish kuni' },
+    pickup:  { name: "Do'kondan olib ketish", fee: 0, time: 'bugun, 2 soat ichida' }
+  };
+  const FREE_COURIER_FROM = 3000000;
+  const REGIONS = ['Toshkent shahri', 'Toshkent viloyati', 'Samarqand', 'Buxoro', "Farg'ona", 'Andijon', 'Namangan',
+    'Qashqadaryo', 'Surxondaryo', 'Xorazm', 'Navoiy', 'Jizzax', 'Sirdaryo', "Qoraqalpog'iston"];
+
+  /* ---------- Holat ---------- */
+  let cart = store.get('cart', []);          // [{id, qty}]
+  let user = store.get('session', null);     // {name, phone}
+  const state = { q: '', cat: 'all', sort: 'default' };
+  let afterAuth = null;
+
+  const byId = id => PRODUCTS.find(p => p.id === Number(id));
+  const catName = id => (CATEGORIES.find(c => c.id === id) || {}).name || '';
+
+  /* ---------- Rasmlar (avtomatik chizilgan 4 ko'rinish) ---------- */
+  function shade(hex, amt) {
+    const n = parseInt(hex.slice(1), 16);
+    const f = v => Math.max(0, Math.min(255, v + amt));
+    return '#' + [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(f).map(v => v.toString(16).padStart(2, '0')).join('');
+  }
+
+  function drawDevice(type, c) {
+    const dark = '#0F1B2D', c2 = shade(c, -45);
+    const defs = `<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c}"/><stop offset="1" stop-color="${c2}"/></linearGradient>`;
+    let body = '';
+    switch (type) {
+      case 'phone':
+        body = `<rect x="-85" y="-170" width="170" height="340" rx="30" fill="${dark}"/>
+          <rect x="-77" y="-162" width="154" height="324" rx="24" fill="url(#g)"/>
+          <circle cx="0" cy="-146" r="6" fill="${dark}"/>
+          <rect x="-56" y="-100" width="112" height="60" rx="14" fill="#fff" opacity=".25"/>
+          <rect x="-56" y="-26" width="52" height="52" rx="14" fill="#fff" opacity=".2"/>
+          <rect x="4" y="-26" width="52" height="52" rx="14" fill="#fff" opacity=".2"/>
+          <rect x="-56" y="40" width="112" height="14" rx="7" fill="#fff" opacity=".2"/>`;
+        break;
+      case 'headphones':
+        body = `<path d="M-115 30 C-115 -150 115 -150 115 30" fill="none" stroke="${dark}" stroke-width="22" stroke-linecap="round"/>
+          <rect x="-150" y="-10" width="64" height="140" rx="30" fill="url(#g)"/>
+          <rect x="-96" y="6" width="22" height="108" rx="11" fill="${dark}"/>
+          <rect x="86" y="-10" width="64" height="140" rx="30" fill="url(#g)"/>
+          <rect x="74" y="6" width="22" height="108" rx="11" fill="${dark}"/>`;
+        break;
+      case 'buds':
+        body = `<rect x="-120" y="10" width="240" height="140" rx="56" fill="#F3F5F9" stroke="#C9D0DC" stroke-width="4"/>
+          <path d="M-120 70 H120" stroke="#C9D0DC" stroke-width="4"/>
+          <circle cx="0" cy="70" r="7" fill="url(#g)"/>
+          <g transform="translate(-52 -50) rotate(14)"><ellipse cx="0" cy="0" rx="34" ry="42" fill="url(#g)"/><rect x="-9" y="26" width="18" height="70" rx="9" fill="url(#g)"/></g>
+          <g transform="translate(52 -50) rotate(-14)"><ellipse cx="0" cy="0" rx="34" ry="42" fill="url(#g)"/><rect x="-9" y="26" width="18" height="70" rx="9" fill="url(#g)"/></g>`;
+        break;
+      case 'watch':
+        body = `<rect x="-46" y="-195" width="92" height="130" rx="20" fill="${dark}"/>
+          <rect x="-46" y="65" width="92" height="130" rx="20" fill="${dark}"/>
+          <rect x="-92" y="-102" width="184" height="204" rx="50" fill="#1b2a44"/>
+          <rect x="-80" y="-90" width="160" height="180" rx="40" fill="#050B16"/>
+          <circle cx="0" cy="-4" r="56" fill="none" stroke="url(#g)" stroke-width="12" stroke-dasharray="260 100" stroke-linecap="round"/>
+          <text x="0" y="12" text-anchor="middle" font-family="sans-serif" font-weight="800" font-size="40" fill="#fff">10:09</text>
+          <rect x="92" y="-30" width="10" height="44" rx="5" fill="${c}"/>`;
+        break;
+      case 'laptop':
+        body = `<rect x="-190" y="-150" width="380" height="245" rx="16" fill="${dark}"/>
+          <rect x="-177" y="-137" width="354" height="219" rx="6" fill="url(#g)"/>
+          <rect x="-150" y="-110" width="190" height="120" rx="10" fill="#fff" opacity=".22"/>
+          <rect x="60" y="-110" width="90" height="56" rx="10" fill="#fff" opacity=".18"/>
+          <rect x="60" y="-42" width="90" height="52" rx="10" fill="#fff" opacity=".28"/>
+          <path d="M-235 100 H235 L208 128 H-208 Z" fill="#C9D0DC"/>
+          <rect x="-36" y="100" width="72" height="9" rx="4" fill="#A5AEBD"/>`;
+        break;
+      case 'speaker': {
+        let dots = '';
+        for (let y = -120; y <= 120; y += 22) for (let x = -50; x <= 50; x += 22) dots += `<circle cx="${x}" cy="${y}" r="4" fill="${dark}" opacity=".45"/>`;
+        body = `<rect x="-82" y="-155" width="164" height="310" rx="72" fill="url(#g)"/>${dots}
+          <rect x="-82" y="-8" width="164" height="16" fill="${dark}" opacity=".35"/>
+          <circle cx="0" cy="118" r="10" fill="#fff" opacity=".8"/>`;
+        break;
+      }
+      case 'powerbank':
+        body = `<rect x="-68" y="-145" width="136" height="290" rx="28" fill="url(#g)"/>
+          <rect x="-44" y="-112" width="88" height="14" rx="7" fill="#fff" opacity=".9"/>
+          <rect x="-44" y="-86" width="88" height="14" rx="7" fill="#fff" opacity=".9"/>
+          <rect x="-44" y="-60" width="88" height="14" rx="7" fill="#fff" opacity=".9"/>
+          <rect x="-44" y="-34" width="88" height="14" rx="7" fill="#fff" opacity=".35"/>
+          <text x="0" y="48" text-anchor="middle" font-family="sans-serif" font-weight="800" font-size="26" fill="#fff">20000</text>
+          <text x="0" y="72" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="14" fill="#fff" opacity=".8">mAh</text>
+          <rect x="-26" y="112" width="52" height="14" rx="7" fill="${dark}"/>`;
+        break;
+    }
+    return { defs, body };
+  }
+
+  const FOCUS = { phone: [0, -110], headphones: [105, 50], buds: [-52, -50], watch: [0, -10], laptop: [-100, -40], speaker: [0, -70], powerbank: [0, -70] };
+  const VIEW_BG = [['#F1F4FA', '#DCE3F0'], ['#E6EEFF', '#C9D9FA'], ['#FFF3DB', '#FFE1A6'], ['#E7F6EF', '#C6E9DA']];
+  const VIEW_NAME = ['Old tomoni', 'Yon tomoni', 'Yaqindan', 'Quti bilan'];
+  const imgCache = {};
+
+  function makeImage(p, view) {
+    const key = p.id + ':' + view;
+    if (imgCache[key]) return imgCache[key];
+    const { defs, body } = drawDevice(p.art, p.color);
+    const [a, b] = VIEW_BG[view];
+    let scene = '';
+    if (view === 0) {
+      scene = `<ellipse cx="300" cy="535" rx="150" ry="14" fill="#0F1B2D" opacity=".1"/><g transform="translate(300 320)">${body}</g>`;
+    } else if (view === 1) {
+      scene = `<ellipse cx="320" cy="540" rx="160" ry="16" fill="#0F1B2D" opacity=".14"/><g transform="translate(300 310) rotate(-18) scale(.92)">${body}</g>`;
+    } else if (view === 2) {
+      const [fx, fy] = FOCUS[p.art], s = 2.2;
+      scene = `<g transform="translate(${300 - fx * s} ${300 - fy * s}) scale(${s})">${body}</g>`;
+    } else {
+      const label = esc(p.name.split(' ').slice(0, 2).join(' '));
+      scene = `<rect x="90" y="110" width="420" height="350" rx="22" fill="${shade(p.color, -30)}"/>
+        <rect x="90" y="110" width="420" height="70" rx="22" fill="${shade(p.color, -60)}"/>
+        <rect x="90" y="150" width="420" height="30" fill="${shade(p.color, -60)}"/>
+        <text x="120" y="154" font-family="sans-serif" font-weight="800" font-size="26" fill="#fff">${label}</text>
+        <g transform="translate(300 330) scale(.62)">${body}</g>`;
+    }
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+      <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>${defs}</defs>
+      <rect width="600" height="600" fill="url(#bg)"/>${scene}
+      <rect x="20" y="552" width="150" height="28" rx="14" fill="#0F1B2D" opacity=".75"/>
+      <text x="95" y="571" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="14" fill="#fff">${VIEW_NAME[view]}</text>
+    </svg>`;
+    return (imgCache[key] = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg));
+  }
+
+  // Mahsulotning 4 ta rasmi: o'zingiznikini `images` maydoniga yozsangiz, o'sha ishlatiladi
+  const images = p => (p.images && p.images.length ? p.images : [0, 1, 2, 3].map(v => makeImage(p, v)));
+
+  /* ---------- Toast ---------- */
+  let toastTimer;
+  function toast(msg) {
+    const t = $('#toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+  }
+
+  /* ---------- Katalog, filtr va qidiruv ---------- */
+  function renderChips() {
+    const all = [{ id: 'all', name: 'Hammasi' }, ...CATEGORIES];
+    $('#chips').innerHTML = all.map(c =>
+      `<button class="chip ${state.cat === c.id ? 'on' : ''}" data-cat="${c.id}" role="tab" aria-selected="${state.cat === c.id}">${esc(c.name)}</button>`).join('');
+  }
+
+  function filtered() {
+    const tokens = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+    let list = PRODUCTS.filter(p => {
+      if (state.cat !== 'all' && p.cat !== state.cat) return false;
+      if (!tokens.length) return true;
+      const hay = (p.name + ' ' + p.desc + ' ' + catName(p.cat) + ' ' + p.specs.map(s => s.join(' ')).join(' ')).toLowerCase();
+      return tokens.every(t => hay.includes(t));
+    });
+    if (state.sort === 'cheap') list.sort((a, b) => a.price - b.price);
+    if (state.sort === 'expensive') list.sort((a, b) => b.price - a.price);
+    if (state.sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name));
+    return list;
+  }
+
+  function renderGrid() {
+    const list = filtered();
+    $('#grid').innerHTML = list.map(p => {
+      const off = p.old ? Math.round((1 - p.price / p.old) * 100) : 0;
+      return `<article class="card" data-id="${p.id}">
+        <div class="card-img">
+          <img src="${images(p)[0]}" alt="${esc(p.name)}" loading="lazy" data-hover>
+          ${off ? `<span class="badge">−${off}%</span>` : ''}
+        </div>
+        <div class="card-body">
+          <h3>${esc(p.name)}</h3>
+          <div class="price-row"><span class="price">${fmt(p.price)}</span>${p.old ? `<span class="old">${fmt(p.old)}</span>` : ''}</div>
+          <button class="btn" data-add="${p.id}">Savatga solish</button>
+        </div>
+      </article>`;
+    }).join('');
+    $('#empty').hidden = list.length > 0;
+    $('#resultInfo').textContent = state.q
+      ? `"${state.q}" bo'yicha ${list.length} ta natija`
+      : `${list.length} ta mahsulot`;
+  }
+
+  function resetFilters() {
+    state.q = ''; state.cat = 'all'; state.sort = 'default';
+    $('#searchInput').value = ''; $('#sortSelect').value = 'default';
+    renderChips(); renderGrid();
+  }
+
+  /* ---------- Savat ---------- */
+  const saveCart = () => store.set('cart', cart);
+  const cartCount = () => cart.reduce((s, i) => s + i.qty, 0);
+  const cartSubtotal = () => cart.reduce((s, i) => s + (byId(i.id)?.price || 0) * i.qty, 0);
+
+  function updateBadge(bump) {
+    $('#cartCount').textContent = cartCount();
+    if (bump) {
+      const b = $('#cartBtn');
+      b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
+    }
+  }
+
+  function addToCart(id, qty = 1) {
+    const p = byId(id);
+    if (!p) return;
+    const line = cart.find(i => i.id === p.id);
+    const next = (line ? line.qty : 0) + qty;
+    if (next > p.stock) { toast(`Omborda faqat ${p.stock} dona bor`); return; }
+    if (line) line.qty = next; else cart.push({ id: p.id, qty });
+    saveCart(); updateBadge(true);
+    toast(`Savatga qo'shildi: ${p.name}`);
+    if ($('#cartDlg').open) renderCart();
+  }
+
+  function changeQty(id, delta) {
+    const line = cart.find(i => i.id === Number(id));
+    if (!line) return;
+    const p = byId(id);
+    const next = line.qty + delta;
+    if (next > p.stock) { toast(`Omborda faqat ${p.stock} dona bor`); return; }
+    if (next <= 0) cart = cart.filter(i => i !== line); else line.qty = next;
+    saveCart(); updateBadge(); renderCart();
+  }
+
+  function renderCart() {
+    const body = $('#cartBody'), foot = $('#cartFoot');
+    if (!cart.length) {
+      body.innerHTML = `<div class="cart-empty"><strong>Savat bo'sh</strong>Yoqqan mahsulotni "Savatga solish" tugmasi bilan qo'shing.</div>`;
+      foot.hidden = true;
+      return;
+    }
+    foot.hidden = false;
+    body.innerHTML = cart.map(i => {
+      const p = byId(i.id);
+      return `<div class="line">
+        <img src="${images(p)[0]}" alt="">
+        <div>
+          <h4>${esc(p.name)}</h4>
+          <span class="price">${fmt(p.price * i.qty)}</span><br>
+          <span class="qty">
+            <button data-dec="${p.id}" aria-label="Kamaytirish">−</button>
+            <span>${i.qty}</span>
+            <button data-inc="${p.id}" aria-label="Ko'paytirish">+</button>
+          </span>
+        </div>
+        <button class="rm" data-rm="${p.id}">O'chirish</button>
+      </div>`;
+    }).join('');
+
+    const sub = cartSubtotal();
+    const left = FREE_COURIER_FROM - sub;
+    const pct = Math.min(100, (sub / FREE_COURIER_FROM) * 100);
+    foot.innerHTML = `
+      <div class="free-bar">${left > 0 ? `Kuryer bepul bo'lishiga ${fmt(left)} qoldi` : 'Toshkentda kuryer yetkazib berish bepul'}<i style="--p:${pct}%"></i></div>
+      <div class="sum-row total"><span>Jami</span><span>${fmt(sub)}</span></div>
+      <button class="btn block" id="toCheckout">Buyurtma berish</button>`;
+  }
+
+  /* ---------- Mahsulot oynasi (3–4 rasm) ---------- */
+  function openProduct(id) {
+    const p = byId(id);
+    if (!p) return;
+    const imgs = images(p);
+    const off = p.old ? Math.round((1 - p.price / p.old) * 100) : 0;
+    $('#productBody').innerHTML = `
+      <div class="p-grid">
+        <div class="gallery">
+          <div class="main"><img id="mainImg" src="${imgs[0]}" alt="${esc(p.name)}"></div>
+          <div class="thumbs">${imgs.map((src, i) =>
+            `<button class="${i === 0 ? 'on' : ''}" data-thumb="${i}" aria-label="${i + 1}-rasm"><img src="${src}" alt=""></button>`).join('')}</div>
+        </div>
+        <div class="p-info">
+          <span class="stock">Omborda ${p.stock} dona</span>
+          <h2>${esc(p.name)}</h2>
+          <div class="p-price"><span class="price">${fmt(p.price)}</span>${p.old ? `<span class="old">${fmt(p.old)}</span><span class="badge" style="position:static">−${off}%</span>` : ''}</div>
+          <p class="desc">${esc(p.desc)}</p>
+          <table class="specs">${p.specs.map(s => `<tr><td>${esc(s[0])}</td><td>${esc(s[1])}</td></tr>`).join('')}</table>
+          <button class="btn block" data-add="${p.id}">Savatga solish</button>
+        </div>
+      </div>`;
+    $('#productBody').dataset.imgs = JSON.stringify(imgs);
+    $('#productDlg').showModal();
+  }
+
+  /* ---------- Hisob: kirish / ro'yxatdan o'tish ---------- */
+  function normPhone(v) {
+    let d = String(v).replace(/\D/g, '');
+    if (d.length === 9) d = '998' + d;
+    return /^998\d{9}$/.test(d) ? '+' + d : null;
+  }
+
+  async function hash(text) {
+    try {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('nuqta:' + text));
+      return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+    } catch {
+      return 'plain:' + text; // crypto.subtle faqat https yoki localhost'da ishlaydi
+    }
+  }
+
+  function updateAccountBtn() {
+    $('#accountBtn').textContent = user ? user.name.split(' ')[0] : 'Kirish';
+  }
+
+  function openAuth(note, cb, tab = 'login') {
+    afterAuth = cb || null;
+    const n = $('#authNote');
+    n.hidden = !note; n.textContent = note || '';
+    switchTab(tab);
+    $$('#authDlg .err').forEach(e => e.textContent = '');
+    $('#authDlg').showModal();
+  }
+
+  function switchTab(tab) {
+    $$('#authDlg .tab').forEach(t => t.classList.toggle('on', t.dataset.tab === tab));
+    $('#loginForm').hidden = tab !== 'login';
+    $('#registerForm').hidden = tab !== 'register';
+  }
+
+  function finishAuth() {
+    updateAccountBtn();
+    $('#authDlg').close();
+    toast(`Xush kelibsiz, ${user.name.split(' ')[0]}!`);
+    const cb = afterAuth; afterAuth = null;
+    if (cb) cb();
+  }
+
+  async function onRegister(e) {
+    e.preventDefault();
+    const f = e.target, err = $('.err', f);
+    const name = f.name.value.trim(), phone = normPhone(f.phone.value);
+    if (name.length < 2) return void (err.textContent = 'Ismingizni kiriting.');
+    if (!phone) return void (err.textContent = "Telefon raqamni +998 90 123 45 67 ko'rinishida kiriting.");
+    if (f.password.value.length < 6) return void (err.textContent = "Parol kamida 6 belgidan iborat bo'lsin.");
+    if (f.password.value !== f.password2.value) return void (err.textContent = 'Parollar bir xil emas.');
+    const users = store.get('users', {});
+    if (users[phone]) return void (err.textContent = "Bu raqam ro'yxatdan o'tgan. \"Kirish\" bo'limidan kiring.");
+    users[phone] = { name, phone, pass: await hash(f.password.value) };
+    store.set('users', users);
+    user = { name, phone }; store.set('session', user);
+    f.reset();
+    finishAuth();
+  }
+
+  async function onLogin(e) {
+    e.preventDefault();
+    const f = e.target, err = $('.err', f);
+    const phone = normPhone(f.phone.value);
+    if (!phone) return void (err.textContent = "Telefon raqamni +998 90 123 45 67 ko'rinishida kiriting.");
+    const u = store.get('users', {})[phone];
+    if (!u || u.pass !== await hash(f.password.value)) return void (err.textContent = "Telefon yoki parol noto'g'ri.");
+    user = { name: u.name, phone }; store.set('session', user);
+    f.reset();
+    finishAuth();
+  }
+
+  function openAccount() {
+    const orders = store.get('orders', []).filter(o => o.phone === user.phone).reverse();
+    $('#accountBody').innerHTML = `
+      <h2 style="margin:0 36px 2px 0">${esc(user.name)}</h2>
+      <p style="margin:0 0 18px;color:var(--muted)">${esc(user.phone)}</p>
+      <h3 style="margin:0 0 10px">Buyurtmalarim</h3>
+      ${orders.length ? orders.map(o => `
+        <div class="order">
+          <b>№ ${esc(o.id)} · ${fmt(o.total)}</b>
+          <small>${esc(o.date)} · ${esc(DELIVERY[o.method].name)} · ${esc(o.status)}</small>
+          <small>${o.items.map(i => esc(i.name) + ' × ' + i.qty).join(', ')}</small>
+        </div>`).join('') : '<p style="color:var(--muted)">Hozircha buyurtmalar yo\'q.</p>'}
+      <button class="btn dark block" id="logoutBtn" style="margin-top:12px">Hisobdan chiqish</button>`;
+    $('#accountDlg').showModal();
+  }
+
+  /* ---------- Buyurtma berish va yetkazib berish ---------- */
+  function deliveryFee(method, sub) {
+    if (method === 'courier' && sub >= FREE_COURIER_FROM) return 0;
+    return DELIVERY[method].fee;
+  }
+
+  function openCheckout() {
+    if (!cart.length) return;
+    $('#cartDlg').close();
+    $('#checkoutBody').innerHTML = `
+      <form id="checkoutForm" class="co-grid" novalidate>
+        <div class="form">
+          <h2>Buyurtmani rasmiylashtirish</h2>
+          <label>Ism va familiya <input name="name" value="${esc(user.name)}" required></label>
+          <label>Telefon <input name="phone" type="tel" value="${esc(user.phone)}" required></label>
+
+          <h3>Yetkazib berish usuli</h3>
+          <div class="opts">
+            ${Object.entries(DELIVERY).map(([k, d], i) => `
+              <label class="opt"><input type="radio" name="method" value="${k}" ${i === 0 ? 'checked' : ''}>
+                <span>${esc(d.name)}<small>${esc(d.time)}</small></span><b data-fee="${k}"></b></label>`).join('')}
+          </div>
+
+          <div id="addrBox" class="form">
+            <label>Viloyat / shahar
+              <select name="region">${REGIONS.map(r => `<option>${esc(r)}</option>`).join('')}</select>
+            </label>
+            <label>Manzil (ko'cha, uy, xonadon)
+              <textarea name="address" rows="2" placeholder="Masalan: Chilonzor 9-kvartal, 12-uy, 34-xonadon"></textarea>
+            </label>
+          </div>
+
+          <h3>To'lov usuli</h3>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="pay" value="cash" checked><span>Qabul qilganda naqd<small>Kuryerga yoki do'konda to'laysiz</small></span></label>
+            <label class="opt"><input type="radio" name="pay" value="card"><span>Qabul qilganda karta orqali<small>Uzcard / Humo</small></span></label>
+          </div>
+          <label>Izoh (ixtiyoriy) <input name="note" placeholder="Masalan: qo'ng'iroq qilib keling"></label>
+          <p class="err" role="alert"></p>
+        </div>
+
+        <aside class="summary">
+          <h3 style="margin-top:0">Buyurtmangiz</h3>
+          ${cart.map(i => { const p = byId(i.id); return `<div class="mini"><span>${esc(p.name)} × ${i.qty}</span><b>${fmt(p.price * i.qty)}</b></div>`; }).join('')}
+          <hr style="border:0;border-top:1px solid var(--line);margin:12px 0">
+          <div class="sum-row"><span>Mahsulotlar</span><span>${fmt(cartSubtotal())}</span></div>
+          <div class="sum-row"><span>Yetkazib berish</span><span id="sumFee"></span></div>
+          <div class="sum-row total"><span>Jami</span><span id="sumTotal"></span></div>
+          <button class="btn block" type="submit">Buyurtmani tasdiqlash</button>
+        </aside>
+      </form>`;
+    $('#checkoutDlg').showModal();
+    syncCheckout();
+  }
+
+  function syncCheckout() {
+    const f = $('#checkoutForm');
+    if (!f) return;
+    const sub = cartSubtotal();
+    const inTashkent = f.region.value === 'Toshkent shahri';
+
+    // Kuryer faqat Toshkent shahrida
+    const courier = $('input[value="courier"]', f);
+    courier.disabled = !inTashkent;
+    courier.closest('.opt').style.opacity = inTashkent ? '' : '.5';
+    if (!inTashkent && f.method.value === 'courier') $('input[value="post"]', f).checked = true;
+
+    Object.keys(DELIVERY).forEach(k => {
+      const fee = deliveryFee(k, sub);
+      $(`[data-fee="${k}"]`, f).textContent = fee ? fmt(fee) : 'Bepul';
+    });
+    const method = f.method.value;
+    const fee = deliveryFee(method, sub);
+    $('#addrBox').hidden = method === 'pickup';
+    $('#sumFee').textContent = fee ? fmt(fee) : 'Bepul';
+    $('#sumTotal').textContent = fmt(sub + fee);
+  }
+
+  function submitOrder(e) {
+    e.preventDefault();
+    const f = e.target, err = $('.err', f);
+    const phone = normPhone(f.phone.value);
+    const method = f.method.value;
+    if (f.name.value.trim().length < 2) return void (err.textContent = 'Ismingizni kiriting.');
+    if (!phone) return void (err.textContent = "Telefon raqamni +998 90 123 45 67 ko'rinishida kiriting.");
+    if (method !== 'pickup' && f.address.value.trim().length < 5) return void (err.textContent = "Yetkazib berish manzilini yozing.");
+
+    const sub = cartSubtotal(), fee = deliveryFee(method, sub);
+    const order = {
+      id: String(Date.now()).slice(-7),
+      date: new Date().toLocaleString('uz-UZ', { dateStyle: 'short', timeStyle: 'short' }),
+      phone: user.phone,
+      contactPhone: phone,
+      name: f.name.value.trim(),
+      method,
+      region: method === 'pickup' ? '' : f.region.value,
+      address: method === 'pickup' ? '' : f.address.value.trim(),
+      pay: f.pay.value,
+      note: f.note.value.trim(),
+      items: cart.map(i => ({ id: i.id, name: byId(i.id).name, qty: i.qty, price: byId(i.id).price })),
+      subtotal: sub, fee, total: sub + fee,
+      status: 'Qabul qilindi'
+    };
+    const orders = store.get('orders', []);
+    orders.push(order);
+    store.set('orders', orders);
+    cart = []; saveCart(); updateBadge();
+
+    $('#checkoutBody').innerHTML = `
+      <div class="done">
+        <div class="tick" aria-hidden="true">✓</div>
+        <h2>Buyurtma qabul qilindi</h2>
+        <p>Buyurtma raqami: <b>№ ${esc(order.id)}</b></p>
+        <p>${esc(DELIVERY[method].name)} — ${esc(DELIVERY[method].time)}.</p>
+        <p>Jami to'lov: <b>${fmt(order.total)}</b></p>
+        <p>Operator ${esc(phone)} raqamiga qo'ng'iroq qilib tasdiqlaydi.</p>
+        <button class="btn" data-close style="margin-top:14px">Xaridni davom ettirish</button>
+      </div>`;
+  }
+
+  /* ---------- Hodisalar ---------- */
+  document.addEventListener('click', e => {
+    const t = e.target;
+
+    // Dialogni yopish (× tugmasi yoki tashqarisiga bosish)
+    if (t.closest('[data-close]')) return void t.closest('dialog').close();
+    if (t.tagName === 'DIALOG') {
+      const r = t.getBoundingClientRect();
+      const out = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+      if (out) t.close();
+      return;
+    }
+
+    const add = t.closest('[data-add]');
+    if (add) { e.stopPropagation(); return void addToCart(add.dataset.add); }
+
+    const card = t.closest('.card');
+    if (card) return void openProduct(card.dataset.id);
+
+    const thumb = t.closest('[data-thumb]');
+    if (thumb) {
+      const imgs = JSON.parse($('#productBody').dataset.imgs);
+      $('#mainImg').src = imgs[+thumb.dataset.thumb];
+      $$('.thumbs button').forEach(b => b.classList.toggle('on', b === thumb));
+      return;
+    }
+
+    const chip = t.closest('[data-cat]');
+    if (chip) { state.cat = chip.dataset.cat; renderChips(); renderGrid(); return; }
+
+    if (t.closest('[data-inc]')) return void changeQty(t.closest('[data-inc]').dataset.inc, 1);
+    if (t.closest('[data-dec]')) return void changeQty(t.closest('[data-dec]').dataset.dec, -1);
+    if (t.closest('[data-rm]')) {
+      cart = cart.filter(i => i.id !== Number(t.closest('[data-rm]').dataset.rm));
+      saveCart(); updateBadge(); return void renderCart();
+    }
+
+    if (t.closest('.tab')) return void switchTab(t.closest('.tab').dataset.tab);
+
+    if (t.closest('#cartBtn')) { renderCart(); return void $('#cartDlg').showModal(); }
+    if (t.closest('#accountBtn')) return void (user ? openAccount() : openAuth());
+    if (t.closest('#resetBtn')) return void resetFilters();
+
+    if (t.closest('#toCheckout')) {
+      if (user) openCheckout();
+      else { $('#cartDlg').close(); openAuth("Buyurtma berish uchun kiring yoki ro'yxatdan o'ting.", openCheckout); }
+      return;
+    }
+    if (t.closest('#logoutBtn')) {
+      user = null; store.set('session', null); updateAccountBtn();
+      $('#accountDlg').close(); toast('Hisobdan chiqdingiz');
+    }
+  });
+
+  // Kartaga sichqoncha olib borilganda ikkinchi rasm ko'rinadi
+  $('#grid').addEventListener('mouseover', e => {
+    const img = e.target.closest('[data-hover]');
+    if (img) img.src = images(byId(img.closest('.card').dataset.id))[1];
+  });
+  $('#grid').addEventListener('mouseout', e => {
+    const img = e.target.closest('[data-hover]');
+    if (img) img.src = images(byId(img.closest('.card').dataset.id))[0];
+  });
+
+  // Qidiruv: yozish bilan natijalar chiqadi
+  let searchTimer;
+  $('#searchInput').addEventListener('input', e => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => { state.q = e.target.value.trim(); renderGrid(); }, 120);
+  });
+  $('#searchForm').addEventListener('submit', e => {
+    e.preventDefault();
+    state.q = $('#searchInput').value.trim();
+    renderGrid();
+    $('#catalog').scrollIntoView({ behavior: 'smooth' });
+  });
+  $('#sortSelect').addEventListener('change', e => { state.sort = e.target.value; renderGrid(); });
+
+  $('#loginForm').addEventListener('submit', onLogin);
+  $('#registerForm').addEventListener('submit', onRegister);
+  $('#checkoutBody').addEventListener('submit', e => { if (e.target.id === 'checkoutForm') submitOrder(e); });
+  $('#checkoutBody').addEventListener('change', syncCheckout);
+
+  /* ---------- Boshlash ---------- */
+  cart = cart.filter(i => byId(i.id));   // o'chirilgan mahsulotlarni tozalash
+  renderChips();
+  renderGrid();
+  updateBadge();
+  updateAccountBtn();
+})();
+</script>
+</body>
+</html>
